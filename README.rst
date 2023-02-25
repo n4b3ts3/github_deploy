@@ -1,5 +1,5 @@
 ========================
-Github Deploy :jenkins: 
+Github Deploy :github: 
 ========================
 
 .. image:: https://svgshare.com/i/Zhy.svg
@@ -49,7 +49,7 @@ the previous will create a file called example.env.gpg, `PLEASE NOTE THAT IF THE
 Now, please delete the .env file for security reasons (SO NO ONE WITHOUT ACCESS TO YOUR GPG Key wont be able to access the release configurations)
 Finally, lets do as follows in your Jenkinsfile
 
-.. code-bloc:: groovy
+.. code-block:: groovy
     pipeline{
         agent any
         stages{
