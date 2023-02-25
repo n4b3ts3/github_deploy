@@ -29,20 +29,22 @@ For security reasons you have to use GPG in the .env file.
 So lets say we have an original .env file like follows.
 
 .. code-block:: bash
-        export GD_USERNAME=<your-username>
-        export PAT=<your-encrypted-pat>
-        export REPOSITORY=<your-repository>
-        export BRANCH=<your-target-branch>
-        export TAG=<vX.X.X>
-        export DESCRIPTION=<your-release-description>
-        export PRERELEASE=<true|false>
-        export GEN_PREREL_NOTES=<true|false>
-        export DRAFT=<true|false>
+
+    export GD_USERNAME=<your-username>
+    export PAT=<your-encrypted-pat>
+    export REPOSITORY=<your-repository>
+    export BRANCH=<your-target-branch>
+    export TAG=<vX.X.X>
+    export DESCRIPTION=<your-release-description>
+    export PRERELEASE=<true|false>
+    export GEN_PREREL_NOTES=<true|false>
+    export DRAFT=<true|false>
 
 then we have to use the next over our previously created .env file:
 
 .. code-block:: bash
-        gpg -r <your-key-id> -e <your-file>.env 
+
+    gpg -r <your-key-id> -e <your-file>.env 
 
 
 the previous will create a file called example.env.gpg, `PLEASE NOTE THAT IF THE FILE DOESNT ENDS WITH .env.gpg THE SCRIPT IS NOT GOING TO RECOGNIZE IT` 
@@ -50,34 +52,35 @@ Now, please delete the .env file for security reasons (SO NO ONE WITHOUT ACCESS 
 Finally, lets do as follows in your Jenkinsfile
 
 .. code-block:: groovy
-        pipeline{
-            agent any
-            stages{
-                stage("Build"){
-                    steps{
-                        sh "echo Do your Build steps as you pleased"
-                    }
-                }
-                
-                stage("Test"){
-                    steps{
-                        sh "echo Do your Test steps as you pleased"
-                    }
-                }
 
-                stage("Release"){
-                    steps{
-                        sh "github_deploy.sh /path/to/my/build1 /path/to/my/build2 /path/to/my/buildn  << <your-key-id>"
-                    }
+    pipeline{
+        agent any
+        stages{
+            stage("Build"){
+                steps{
+                    sh "echo Do your Build steps as you pleased"
                 }
+            }
+            
+            stage("Test"){
+                steps{
+                    sh "echo Do your Test steps as you pleased"
+                }
+            }
 
-                stage("Deploy"){
-                    steps{
-                        sh "echo Do your Deploy steps as you pleased"
-                    }
+            stage("Release"){
+                steps{
+                    sh "github_deploy.sh /path/to/my/build1 /path/to/my/build2 /path/to/my/buildn  << <your-key-id>"
+                }
+            }
+
+            stage("Deploy"){
+                steps{
+                    sh "echo Do your Deploy steps as you pleased"
                 }
             }
         }
+    }
 
 Notice that for now you are not capable of explicitly say what repos of the ones you're autodeploying will be actually autodeployed because of that
 each time a Release stage is made you will autodeploy all files configured in ~/.github_deploy/ .
