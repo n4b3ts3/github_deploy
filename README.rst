@@ -70,7 +70,7 @@ Finally, lets do as follows in your Jenkinsfile
 
             stage("Release"){
                 steps{
-                    sh "github_deploy.sh /path/to/my/build1 /path/to/my/build2 /path/to/my/buildn  << <your-key-id>"
+                    sh "export PROJECT_REGEX="<your-project-id>" && github_deploy.sh /path/to/my/build1 /path/to/my/build2 /path/to/my/buildn <<< <your-key-id>"
                 }
             }
 
