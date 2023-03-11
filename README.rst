@@ -103,7 +103,7 @@ If you want to install this to your system please do as follows
 
     wget https://github.com/n4b3ts3/github_deploy/releases/download/v1.0.3/github_deploy.zip
     unzip github_deploy
-    mv `pwd`/github_depleloy.sh /usr/local/bin/git-deploy 
+    mv `pwd`/github_deploy.sh /usr/local/bin/git-deploy 
 
 
 
