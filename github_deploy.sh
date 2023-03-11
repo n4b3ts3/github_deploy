@@ -81,7 +81,7 @@ do
       'generate_release_notes': $GEN_PREREL_NOTES \
     } \
   " # create the json separated to be more organized
-  release_json=$(replace "'" "\"" <<< $release_json) # Replace those  ' by " for json compatibility
+  release_json=$(tr \' \" <<< $release_json) # Replace those  ' by " for json compatibility
   
   release=$(\
   2>/dev/null curl \
