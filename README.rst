@@ -25,7 +25,7 @@ How to use
 ------------
 First, create a file inside the ~/.github_deploy/ folder, for example, example.env
 Is very important the .env part if the file doesnt end with that it wont be recognized by the script.
-For security reasons you have to use GPG in the .env file. 
+For security reasons you may need to use GPG in the .env file, for that please set the GPG_PROJECT environment to any value 
 So lets say we have an original .env file like follows.
 
 .. code-block:: bash
@@ -47,7 +47,7 @@ then we have to use the next over our previously created .env file:
     gpg -r <your-key-id> -e <your-file>.env 
 
 
-the previous will create a file called example.env.gpg, `PLEASE NOTE THAT IF THE FILE DOESNT ENDS WITH .env.gpg THE SCRIPT IS NOT GOING TO RECOGNIZE IT` 
+the previous will create a file called example.env.gpg, `PLEASE NOTE THAT IF THE FILE DOESNT ENDS WITH .env.gpg or .env THE SCRIPT IS NOT GOING TO RECOGNIZE IT` 
 Now, please delete the .env file for security reasons (SO NO ONE WITHOUT ACCESS TO YOUR GPG Key wont be able to access the release configurations)
 Finally, lets do as follows in your Jenkinsfile
 
@@ -82,8 +82,30 @@ Finally, lets do as follows in your Jenkinsfile
         }
     }
 
-Notice that for now you are not capable of explicitly say what repos of the ones you're autodeploying will be actually autodeployed because of that
-each time a Release stage is made you will autodeploy all files configured in ~/.github_deploy/ .
+for specifying a custom project to deploy you must set PROJECT_REGEX environment or variable when calling this script. This allow us to use the value
+of that var to create a custom regex matching the configuration file...
+You may also want to create a dynamic .env file in your project, for the purpose of updating your release descriptions or updating your tag name etc...
+for that purpose create a file using the syntax of KEY: VALUE like follow:
+
+.. code-block::
+
+    TAG: v1.0.3
+    DESCRIPTION: MY BEAUTIFUL DESCRIPTION WITHOUT NEW LINES PLEASE
+
+The previous .env file can have any key described at the top of this README (at location ~/.github_deploy) 
+
+---------------
+How to install
+---------------
+If you want to install this to your system please do as follows
+
+.. code-block:: bash
+
+    wget https://github.com/n4b3ts3/github_deploy/releases/download/v1.0.3/github_deploy.zip
+    unzip github_deploy
+    mv `pwd`/github_depleloy.sh /usr/local/bin/git-deploy 
+
+
 
 ---------------
 Maintainers
