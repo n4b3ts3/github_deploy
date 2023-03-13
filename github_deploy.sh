@@ -84,7 +84,7 @@ do
   release_json=$(tr \' \" <<< $release_json) # Replace those  ' by " for json compatibility
   
   release=$(\
-  2>/dev/null curl \
+  curl \
     -X POST \
     -H "Accept: application/vnd.github+json" \
     -H "Authorization: Bearer $PAT" \
@@ -93,6 +93,7 @@ do
     $url
   ) # Do the actual request to create the release.
   result=$?
+  echo $release
   if [[ $result != 0 ]]; then
     echo "Something happen while creating the release..."
     break
@@ -100,7 +101,7 @@ do
   # Extract the id of the release from the creation response
   id=$(echo "$release" | sed -n -e 's/"id":\ \([0-9]\+\),/\1/p' | head -n 1 | sed 's/[[:blank:]]//g')
   # Upload the artifact
-  2>/dev/null curl \
+  curl \
     -X POST \
     -H "Accept: application/vnd.github+json" \
     -H "Authorization: Bearer $PAT" \
