@@ -62,7 +62,7 @@ do
     echo "Something were wrong when trying to decrypt the project file"
     break
   fi
-  zip temp/artifact $@ # Zip All files given as arguments to this script inside a file called temp/artifact.zip
+  zip -r temp/artifact $@ # Zip All files given as arguments to this script inside a file called temp/artifact.zip
   result=$?
   if [[ $result != 0 ]]; then
     echo "Something happen while zipping the artifacts..."
